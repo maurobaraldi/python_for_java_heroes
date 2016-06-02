@@ -842,8 +842,95 @@ def soma(a: int, b: int) -> int:
   ### Argumentos
 ]
 .right-column[
-Um dos recursos mais interessantes das funções em relação com Java, é como Python lida com argumentos.
+Existem 3 modos de passar argumentos para funçoes.
+
+- Fixos
+- Arbitrarios [listas ou dicionários]
+- Nomeados
+
+**Fixos**
+```python
+def soma(a, b):
+    return a + b
+
+>>> soma(1, 1)
+2
+```
+**Nomeados**
+```python
+def pessoa(nome, idade):
+    return {'nome': nome, 'idade': idade}
+```
+Parametros nomeados podem ter valores padrão.
+```python
+def soma(a, b=1):
+    return a * b
+```
 ]
+---
+.left-column[
+  ## Funções
+  ### Argumentos
+  ### Arbitrarios
+]
+.right-column[
+Para definir argumentos arbitrarios (qunatidades indefinidas) para funções, basta adicionar um ***** antes do argumento ou ****** para argumentos nomeados.
+Argumentos simples são interpretados pela função como uma tupla.
+```python
+def func(*args):
+    for arg in args:
+        print(arg)
+
+>>> func(1,'Python', [2,3,4])
+1
+Python
+[2, 3, 4]
+
+```
+Argumentos nomeados são interpretado como dicionários.
+```python
+def func(**kwargs):
+    print('Lista de argumentos nomeados', kwargs)
+    return {
+        'student': kwargs['nome'],
+        'age': kwargs['idade'],
+    }
+
+>>> func(nome='joão', idade= 3)
+Lista de argumentos nomeados {'nome': 'joão', 'idade': 3}
+{'age': 3, 'student': 'joão'}
+
+```
+]
+---
+.left-column[
+  ## Funções
+  ### Atributos e Metodos
+]
+.right-column[
+Funções têm atributos e metodos comuns a todas as funções. Uma forma de investigar quais atributos e metodos os o objeto tem, é usando o comando .blue[dir]
+```python
+def func():
+    return True
+
+>>> dir(func)
+['__annotations__', '__call__', '__class__', '__closure__', 
+'__code__', '__defaults__', '__delattr__', '__dict__', 
+'__dir__', '__doc__', '__eq__', '__format__', '__ge__', 
+'__get__', '__getattribute__', '__globals__', '__gt__', 
+'__hash__', '__init__', '__kwdefaults__', '__le__', 
+'__lt__', '__module__', '__name__', '__ne__', '__new__', 
+'__qualname__', '__reduce__', '__reduce_ex__', '__repr__', 
+'__setattr__', '__sizeof__', '__str__', '__subclasshook__']
+
+>>> print(func.__class__)
+<class 'function'>
+```
+]
+---
+template: inverse
+
+# Classes
 ---
 References:
 Namespace and Scope:
