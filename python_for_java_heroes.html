@@ -146,12 +146,11 @@ layout: false
 
 - História
 - Características e Sintaxe
-- Tipos
-- Scopo
-- Methodos Builtin
 
 ###.blue[Segunda Parte - Aspectos da linguagem]
 
+- Tipos
+- Scopo
 - Funções, Classes, Instancias, Módulos
 - Orientação a Objetos (Design Patterns)
 - Concorrencia
@@ -487,6 +486,10 @@ Tudo em python são objetos, .blue[None] é um objeto do tipo .blue[NoneType]
 ---
 template: inverse
 
+# Aspectos da Linguagem
+---
+template: inverse
+
 # Tipos
 ---
 .left-column[
@@ -730,15 +733,84 @@ Por exemplo, toda vez que nós chamamos uma for-loop ou definir uma função, el
   ### Namespace
 ]
 .right-column[
-Exsite basicamente 2 namespaces, .blue[global] e .blue[local]
+Há basicamente 2 namespaces, .blue[global] e .blue[local]
 
 A grosso modo, namespaces são apenas recipientes para nomes de mapeamento a objetos. 
 
 Objetos do namespace global estarão disponiveis para a aplicação de um modo geral.
 
 Objetos do namespace local só estão disponoveis dentro do escopo onde foram definidos.
+
+Para entender a hierarquia de namespaces siga a estrutura do LEGB
+
+**Local** -> **Enclosed** -> **Global** -> **Built-in**
+- **Local** refere-se a objetos dentro de classes, metodos ou funções.
+- **Enclosed** se uma função é acondicionada dentro de outra função.
+- **Global** objetos que estão disponíveis para todos os escopos.
+- **Built-in** nomes especiais que o Python reserva para uso próprio.
 ]
 ---
+.left-column[
+  ## Escopo e Namespace
+  ### Namespacing
+  ### Exemplo
+]
+.right-column[
+```python
+x = 100
+
+print "1. Global x:", x
+
+class Test(object):
+    y = x
+    print "2. Enclosed y:", y
+    x = x + 1 
+    print "3. Enclosed x:", x
+    z = x
+
+    def method(self):
+        print "4. Enclosed self.x", self.x
+        print "5. Global x", x
+        try:
+            print y
+        except NameError, e:
+            print "6.", e
+
+    def method_local_ref(self):
+        try:
+            print x
+        except UnboundLocalError, e:
+            print "7.", e
+        x = 200 
+        print "8. Local x", x
+```
+]
+---
+.left-column[
+  ## Escopo e Namespace
+  ### Namespacing
+  ### Exemplo
+]
+.right-column[
+```python
+>>> inst = Test()
+>>> inst.method()
+>>> inst.method_local_ref()
+Global x: 100
+Enclosed y: 100
+Enclosed x: 101
+Enclosed self.x 101
+Global x 100
+global name 'y' is not defined
+local variable 'x' referenced before assignment
+Local x 200
+```
+]
+---
+References:
+Namespace and Scope:
+- http://sebastianraschka.com/Articles/2014_python_scope_and_namespaces.html
+- http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules
 ---
 name: last-page
 template: inverse
