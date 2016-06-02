@@ -783,11 +783,6 @@ class Test(object):
             print("7.", e)
         x = 200
         print("8. Local x", x)
-
-
-foo = Test()
-foo.method()
-foo.method_local_ref()
 ```
 ]
 ---
@@ -798,17 +793,17 @@ foo.method_local_ref()
 ]
 .right-column[
 ```python
+1. Global x: 100
+2. Enclosed y: 100
+3. Enclosed x: 101
 >>> inst = Test()
 >>> inst.method()
+4. Enclosed self.x 101
+5. Global x 100
+6. global name 'y' is not defined
 >>> inst.method_local_ref()
-Global x: 100
-Enclosed y: 100
-Enclosed x: 101
-Enclosed self.x 101
-Global x 100
-global name 'y' is not defined
-local variable 'x' referenced before assignment
-Local x 200
+7. local variable 'x' referenced before assignment
+8. Local x 200
 ```
 ]
 ---
