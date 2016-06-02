@@ -29,8 +29,8 @@
       li p { line-height: 1.25em; }
       .blue { color: #6687b1; }
       .large { font-size: 2em; }
-      .medium-small { 
-          font-size: .75em; 
+      .medium-small {
+          font-size: .75em;
           line-height: 90%;
         }
       .medium { font-size: .8em; }
@@ -255,9 +255,9 @@ name: how
 ### Empresas distribuindo Python em suas aplicações
 
   - Microsoft
-  
+
   - Apple
-  
+
   - IBM
 ]
 ---
@@ -282,7 +282,7 @@ public class HelloWorld {
     public static void main(String[] args) {
         System.out.println("Hello, World");
     }
-    
+
 }
 ```
 
@@ -412,7 +412,7 @@ def division(a, b):
 Erro divindo por zero.
 >>> division(2, 'a')
 O metodos aceita somente números
->>> 
+>>>
 ```
 ]
 ---
@@ -464,7 +464,7 @@ template: inverse
   ### Expressões
 ]
 .right-column[
-As palavras .blue[and], .blue[or], .blue[not], .blue[&&], .blue[||] e .blue[!], funcionam exatamente igual em Java e C. 
+As palavras .blue[and], .blue[or], .blue[not], .blue[&&], .blue[||] e .blue[!], funcionam exatamente igual em Java e C.
 
 Entretanto em Python .blue[==], compara por valor. Java compara numeros por valor e objetos por referência.
 
@@ -529,7 +529,7 @@ Confira abaixo as listas de tipos de dados padrão, mutáveis e imutáveis.
 
 <pre>
     Imutáveis
-    
+
     - int
     - str
     - float
@@ -538,14 +538,14 @@ Confira abaixo as listas de tipos de dados padrão, mutáveis e imutáveis.
     - tuple
     - complex
     - frozenset
-        
+
 </pre>
 ]
 .pull-right[
 
 <pre>
     Mutáveis
-    
+
     - set
     - list
     - dict
@@ -716,7 +716,7 @@ template: inverse
 .right-column[
 Python trata escopo de uma forma diferente de Java, mas seguindo uma padrão de geral de design de linguagens orientada a objetos.
 
-A grosso modo, namespaces são apenas recipientes para nomes de mapeamento a objetos. 
+A grosso modo, namespaces são apenas recipientes para nomes de mapeamento a objetos.
 
 O "escopo" em Python define o "nível de hierarquia", no qual buscamos namespaces para certos mapeamentos "nome-a-objeto".
 
@@ -735,7 +735,7 @@ Por exemplo, toda vez que nós chamamos uma for-loop ou definir uma função, el
 .right-column[
 Há basicamente 2 namespaces, .blue[global] e .blue[local]
 
-A grosso modo, namespaces são apenas recipientes para nomes de mapeamento a objetos. 
+A grosso modo, namespaces são apenas recipientes para nomes de mapeamento a objetos.
 
 Objetos do namespace global estarão disponiveis para a aplicação de um modo geral.
 
@@ -758,31 +758,36 @@ Para entender a hierarquia de namespaces siga a estrutura do LEGB
 .right-column[
 ```python
 x = 100
+print("1. Global x:", x)
 
-print "1. Global x:", x
 
 class Test(object):
     y = x
-    print "2. Enclosed y:", y
-    x = x + 1 
-    print "3. Enclosed x:", x
+    print("2. Enclosed y:", y)
+    x = x + 1
+    print("3. Enclosed x:", x)
     z = x
 
     def method(self):
-        print "4. Enclosed self.x", self.x
-        print "5. Global x", x
+        print("4. Enclosed self.x", self.x)
+        print("5. Global x", x)
         try:
-            print y
-        except NameError, e:
-            print "6.", e
+            print(y)
+        except NameError as e:
+            print("6.", e)
 
     def method_local_ref(self):
         try:
-            print x
-        except UnboundLocalError, e:
-            print "7.", e
-        x = 200 
-        print "8. Local x", x
+            print(x)
+        except UnboundLocalError as e:
+            print("7.", e)
+        x = 200
+        print("8. Local x", x)
+
+
+foo = Test()
+foo.method()
+foo.method_local_ref()
 ```
 ]
 ---
