@@ -807,6 +807,44 @@ Local x 200
 ```
 ]
 ---
+template: inverse
+
+# Funções
+---
+.left-column[
+  ## Funções
+]
+.right-column[
+Em Java o metodo mais comum de criar metodos assemelha-se ao exemplo a seguir.
+```java
+public static int soma(int a, int b) {
+    return a + b;
+}
+```
+
+Em Python as definiçoes de um método podem ser mais simplificadas.
+```python
+def soma(a, b):
+    return a + b
+```
+Em Python não é preciso definir o tipo de acesso (**public static**), o tipo de retorno do método (**int**) nem o tipo do argumento do método (**int a**)
+
+Existe uma funcionalidade chamada .blue[Function Annotations] que guarda metadados da função para ser recuperada e usada por IDEs.
+Entretanto as .blue[annotations] são opcionais.
+```python
+def soma(a: int, b: int) -> int:
+    return a + b
+```
+]
+---
+.left-column[
+  ## Funções
+  ### Argumentos
+]
+.right-column[
+Um dos recursos mais interessantes das funções em relação com Java, é como Python lida com argumentos.
+]
+---
 References:
 Namespace and Scope:
 - http://sebastianraschka.com/Articles/2014_python_scope_and_namespaces.html
