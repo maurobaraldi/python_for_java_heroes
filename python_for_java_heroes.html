@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="keywords" content="remark,remarkjs,markdown,slideshow,presentation" />
     <meta name="description" content="A simple, in-browser, markdown-driven slideshow tool." />
-    <title>Remark</title>
+    <title>Python for Java Heroes</title>
     <style>
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -515,122 +515,230 @@ int
 ]
 ---
 .left-column[
-  ## Markdown extensions
-  ### - Slide properties
-  ### - Content classes
-  ### - Syntax Highlighting
+  ## Python
+  ### Tipos
+  ### Built-in Types
 ]
 .right-column[
-Code blocks can be syntax highlighted by specifying a language from the set of [supported languages](https://github.com/gnab/remark/wiki/Configuration#highlighting).
-
-Using [GFM](http://github.github.com/github-flavored-markdown/) fenced code blocks you can easily specify highlighting language:
+Confira abaixo as listas de tipos de dados padrão, mutáveis e imutáveis.
 
 .pull-left[
 
-<pre><code>```javascript
-function add(a, b)
-  return a + b
-end
-```</code></pre>
+<pre>
+    Imutáveis
+    
+    - int
+    - str
+    - float
+    - bool
+    - bytes
+    - tuple
+    - complex
+    - frozenset
+        
+</pre>
 ]
 .pull-right[
 
-<pre><code>```ruby
-def add(a, b)
-  a + b
-end
-```</code></pre>
+<pre>
+    Mutáveis
+    
+    - set
+    - list
+    - dict
+</pre>
 ]
-
-A number of highlighting [styles](https://github.com/gnab/remark/wiki/Configuration#highlighting) are available, including several well-known themes from different editors and IDEs.
-
-]
----
-.left-column[
-  ## Presenter mode
-]
-.right-column[
-To help out with giving presentations, a presenter mode comprising the
-following features is provided:
-
-- Display of slide notes for the current slide, to help you remember
-  key points
-
-- Display of upcoming slide, to let you know what's coming
-
-- Cloning of slideshow for viewing on extended display
 ]
 ---
 .left-column[
-  ## Presenter mode
-  ### - Inline notes
+  ## Python
+  ### Tipos
+  ### Built-in Types
 ]
 .right-column[
-Just like three dashes separate slides,
-three question marks separate slide content from slide notes:
+.blue[int], .blue[float], .blue[complex]
+```python
+>>> inteiro = 1000
+>>> flutuante = 12.76
+>>> complexo = (3+8j)
 
 ```
-Slide 1 content
-
-*???
-
-Slide 1 notes
-
----
-
-Slide 2 content
-
-*???
-
-Slide 2 notes
+.blue[bool]
+```python
+>>> ativo = True
+>>> fechado = False
 ```
-
-Slide notes are also treated as Markdown, and will be converted in the
-same manner slide content is.
-
-Pressing __P__ will toggle presenter mode.
-]
-???
-Congratulations, you just toggled presenter mode!
-
-Now press __P__ to toggle it back off.
----
-.left-column[
-  ## Presenter mode
-  ### - Inline notes
-  ### - Cloned view
-]
-.right-column[
-Presenter mode of course makes no sense to the audience.
-
-Creating a cloned view of your slideshow lets you:
-
-- Move the cloned view to the extended display visible to the audience
-
-- Put the original slideshow in presenter mode
-
-- Navigate as usual, and the cloned view will automatically keep up with the original
-
-Pressing __C__ will open a cloned view of the current slideshow in a new
-browser window.
+.blue[str]
+```python
+>>> linguagem = "Java"
+>>> compania = "Oracle"
+```
+.blue[bytes]
+```python
+>>> linguagem = b"Some ASCII"
+>>> compania = bytes([119, 105, 107, 105])
+```
 ]
 ---
 template: inverse
 
-## It's time to get started!
+# Coleções de Dados
+### Tipos
 ---
 .left-column[
-  ## Getting started
+  ## Python
+  ### Tipos
+  ### Coleções
 ]
 .right-column[
-Getting up and running is done in only a few steps:
+Java possui algumas alternativas como a interface de .blue[Collections] para trabalhar com caontainer de dados.
+Além do bom e velho array.
 
-1. Visit the [project site](http://github.com/gnab/remark)
+Python chama tipos que se comportam como coleções de dados em geral de .blue[iterables] (iteraveis). Objetos iteraveis tem comportamentos similar ao de um array.
 
-2. Follow the steps in the Getting Started section
+Os tipos .blue[tuple] (tuplas) e .blue[list] (listas) são os tipos mais comumente usados. Lista mutaveis e tuplas não.
 
-For more information on using remark, please check out the [wiki](https://github.com/gnab/remark/wiki) pages.
+Alem das listas e tuplas outros tipos que são iteravais são dicionarios (.blue[dict]), em outras linguagens dicts podem ser chamados de arrays associativos, conjuntos (.blue[set]) e strings!!
+
+Cada tipo tem atributos e metodos característicos, além do comportamento padrão de iteraveis: iterar por ele, tamanho do objeto entre outros.
+
 ]
+---
+.left-column[
+  ## Python
+  ### Tipos
+  ### Tuplas
+]
+.right-column[
+Tuplas - Container imutavel de objetos
+```python
+>>> valores = (1, 2, 3, 4)
+>>> languages = ('Java', 'Python')
+>>> containers = ((1, 2, 3), (4, 5, 6))
+>>> mix = (1, 2, 3, (4, 5, 6), 'Python', 'Java')
+```
+Uma característica bem interessante na indexação, é que Python suporta indexação negativa
+
+```python
+>>> mix[0]
+1
+>>> mix[-1]
+'Java'
+>>> mix[-3]
+(4,5,6)
+```
+
+Fatiar (slicing) também é um comportamento padrão, oque torna o processo fácil e barato.
+```python
+>>> mix[2:5]
+3, (4, 5, 6), 'Python'
+```
+]
+---
+.left-column[
+  ## Python
+  ### Tipos
+  ### Listas
+]
+.right-column[
+Listas - Container mutavel de objetos
+```python
+>>> valores = [1, 2, 3, 4]
+>>> languages = ['Java', 'Python']
+>>> containers = [(1, 2, 3), (4, 5, 6)]
+>>> mix = valores + languages + containers
+>>> mix
+(1, 2, 3, (4, 5, 6), 'Python', 'Java')
+```
+Listas têm todos os comportamentos de tuplas com a habilidade de ser mutável
+
+```python
+>>> mix.append('.Net')
+>>> mix
+[1, 2, 3, (4, 5, 6), 'Python', 'Java', '.Net']
+>>> mix.insert(-2, 'PHP')
+>>> mix
+[1, 2, 3, (4, 5, 6), 'PHP', 'Python', 'Java', '.Net']
+>>> mix.remove('Python')
+>>> mix
+[1, 2, 3, (4, 5, 6), 'PHP', 'Java', '.Net']
+```
+
+Fatiar (slicing) também é um comportamento padrão, oque torna o processo fácil e barato.
+```python
+>>> mix[2:5]
+3, (4, 5, 6), 'PHP'
+```
+]
+---
+.left-column[
+  ## Python
+  ### Tipos
+  ### Dicionários
+]
+.right-column[
+Diferente de sequencias, dicionarios são indexados por qualquer tipo imutável, enquanto listas e tuplas são indexados por números.
+```python
+>>> pessoa = {'nome': 'João', 'idade': 10}
+>>> pessoa['nome']
+'Joao'
+>>> pessoa['idade']
+10
+```
+É possivel recuperar somente as chaves ou os valores de um dicionário.
+```python
+>>> pessoa.keys()
+dict_keys(['idade', 'nome'])
+>>> pessoa.values()
+dict_values([10, 'João'])
+```
+Uma forma muito comum é usar uma lista de dicionarios que representam entidades.
+```python
+>>> pessoas = [{'nome': 'João', 'idade': 10}, {'nome': 'Maria', 'idade': 15}]
+>>> pessoas[0]['nome']
+'Joao'
+>>> pessoas[1]['idade']
+15
+```
+]
+---
+template: inverse
+
+# Escopo e Namespace
+---
+.left-column[
+  ## Escopo e Namespace
+  ### Definições
+]
+.right-column[
+Python trata escopo de uma forma diferente de Java, mas seguindo uma padrão de geral de design de linguagens orientada a objetos.
+
+A grosso modo, namespaces são apenas recipientes para nomes de mapeamento a objetos. 
+
+O "escopo" em Python define o "nível de hierarquia", no qual buscamos namespaces para certos mapeamentos "nome-a-objeto".
+
+Podemos imaginar um namespace como uma estrutura de dicionário Python, onde as chaves de dicionário representam os nomes e o dicionário valoriza o objeto em si (e esta é também a forma como namespaces são actualmente implementados em Python)
+
+```python
+a_namespace = {'name_a':object_1, 'name_b':object_2, ...}
+```
+Por exemplo, toda vez que nós chamamos uma for-loop ou definir uma função, ele irá criar o seu próprio namespace. Namespaces também têm diferentes níveis de hierarquia.
+]
+---
+.left-column[
+  ## Escopo e Namespace
+  ### Namespace
+]
+.right-column[
+Exsite basicamente 2 namespaces, .blue[global] e .blue[local]
+
+A grosso modo, namespaces são apenas recipientes para nomes de mapeamento a objetos. 
+
+Objetos do namespace global estarão disponiveis para a aplicação de um modo geral.
+
+Objetos do namespace local só estão disponoveis dentro do escopo onde foram definidos.
+]
+---
 ---
 name: last-page
 template: inverse
