@@ -133,6 +133,8 @@ class: center, middle, inverse
 #Python para Java Heroes
 Todos super-heróis são bem vindos :-)
 
+### Por Mauro Baraldi (@mbaraldi) e Henrique Gonzalez (@henriquesg)
+
 .footnote[Slides created with [RemarkJS](https://github.com/gnab/remark)]
 ---
 # Agenda
@@ -152,7 +154,6 @@ layout: false
 - Tipos
 - Escopo
 - Funções, Classes, Instâncias, Módulos
-- Orientação a Objetos (Design Patterns)
 - Concorrência
 - Unit Testing
 - Frameworks
@@ -1000,17 +1001,20 @@ template: inverse
 Em Python herança é usado a todo momento pois todos objetos têm como ancestral comum, a classe .blue[object].
 ```python
 class BaseClass:
-    def __init__(self):
-        self.attribute = "Classe Base"
+    def __init__(self, *args, **kwargs):
+        self.name = "Classe Base"
 
 class DerivedClass(BaseClass):
-    def __init__(self):
-        self.attribute = "Classe Derivada"
+    def __init__(self, *args, **kwargs):
+        super(DerivedClass, self).__init__()
+        self.name = kwargs.get("name", self.name)
 
 >>> base = BaseClass()
 >>> print(base.attribute)
+'Classe Base'
 >>> derivada = DerivedClass()
 >>> print(derivada.attribute)
+'Classe Derivada'
 ```
 ]
 ---
