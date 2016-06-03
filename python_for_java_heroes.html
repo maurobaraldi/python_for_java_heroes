@@ -133,6 +133,8 @@ class: center, middle, inverse
 #Python para Java Heroes
 Todos super-heróis são bem vindos :-)
 
+### Por Mauro Baraldi (@mbaraldi) e Henrique Gonzalez (@henriquesg)
+
 .footnote[Slides created with [RemarkJS](https://github.com/gnab/remark)]
 ---
 # Agenda
@@ -152,7 +154,6 @@ layout: false
 - Tipos
 - Escopo
 - Funções, Classes, Instâncias, Módulos
-- Orientação a Objetos (Design Patterns)
 - Concorrência
 - Unit Testing
 - Frameworks
@@ -932,10 +933,97 @@ template: inverse
 
 # Classes
 ---
+.left-column[
+  ## Classes
+  ## Definição
+]
+.right-column[
+O design de classes em Python é inspirado no design de classes em C++, que adiciona o mínimo necessário (sintaxe e semantica).
+
+Todas as funcionalidades base da programação orientada a objetos estão disponíveis. O mecanismo de herança permite multiplas classes base (herança multipla). Toda classe tem um ancestral comum que é .blue[object].
+
+Atribuição de referencia (atributos) e instanciação (metodos) são as operações suportadas pelas classes.
+
+```python
+class ClasseBase:
+    """Classe base de exemplo."""
+    valor = 12345
+
+    def function(self):
+        return 'hello world'
+```
+Desse modo .blue[ClasseBase.valor] e .blue[ClasseBase.function] são atributos de classe, sendo um objeto do tipo .blue[int] e um objetdo to tipo .blue[function].
+]
+---
+.left-column[
+  ## Classes
+  ## Instâncias
+]
+.right-column[
+Instanciamento de classes segue a mesma notação de funções.
+```python
+base = ClasseBase()
+```
+
+O objeto class tem um metodo "especial" chamado .blue[__init__] que pode ser usado para definir artibutos iniciais para a classe.
+ 
+```python
+class Ponto:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+```
+O equivalente em Java
+```java
+public class Ponto {
+    public int x = 0;
+    public int y = 0;
+        
+    //constructor
+    public Ponto(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+```
+]
+---
+template: inverse
+
+# Classes
+### Herança
+---
+.left-column[
+  ## Classes
+  ## Herança
+]
+.right-column[
+Em Python herança é usado a todo momento pois todos objetos têm como ancestral comum, a classe .blue[object].
+```python
+class BaseClass:
+    def __init__(self, *args, **kwargs):
+        self.name = "Classe Base"
+
+class DerivedClass(BaseClass):
+    def __init__(self, *args, **kwargs):
+        super(DerivedClass, self).__init__()
+        self.name = kwargs.get("name", self.name)
+
+>>> base = BaseClass()
+>>> print(base.attribute)
+'Classe Base'
+>>> derivada = DerivedClass()
+>>> print(derivada.attribute)
+'Classe Derivada'
+```
+]
+---
 References:
 Namespace and Scope:
 - http://sebastianraschka.com/Articles/2014_python_scope_and_namespaces.html
 - http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules
+Classes
+- https://docs.python.org/3/tutorial/classes.html
 ---
 name: last-page
 template: inverse
