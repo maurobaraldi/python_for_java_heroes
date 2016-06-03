@@ -150,10 +150,10 @@ layout: false
 ###.blue[Segunda Parte - Aspectos da linguagem]
 
 - Tipos
-- Scopo
-- Funções, Classes, Instancias, Módulos
+- Escopo
+- Funções, Classes, Instâncias, Módulos
 - Orientação a Objetos (Design Patterns)
-- Concorrencia
+- Concorrência
 - Unit Testing
 - Frameworks
 
@@ -270,11 +270,11 @@ template: inverse
   ### Características
 ]
 .right-column[
-Python é compilada compilada para bytecode, e então executada pela VM, mutio semelhante a Java.
+Python é compilada compilada para bytecode, e então executada pela VM, muito semelhante a Java.
 
 O compilador Python padrão é chamado de .blue[CPython]. Existem algumas variações de compiladores como .blue[Jython] (Java), .blue[Iron Python] (.Net), .blue[Pypy] (Python).
 
-Python usa espaços como delimitador de blocos em vez de chaves como em Java. A identação do bloco indica a execução do bloco.
+Python usa espaços como delimitador de blocos em vez de chaves como em Java. A indentação do bloco indica a execução do bloco.
 
 ```java
 public class HelloWorld {
@@ -499,7 +499,7 @@ template: inverse
 .right-column[
 Como dito anteriormente, em Python tudo é objeto.
 
-Objetos são uma abstração para os dados. Todos os dados em Python são representados por objetos or por algum tipo de relacionameto entre objetos.
+Objetos são uma abstração para os dados. Todos os dados em Python são representados por objetos ou por algum tipo de relacionamento entre objetos.
 
 Todo objeto tem uma identidade, um tipo e um valor. A identidade de um objeto nunca muda. A identidade é o endereço desse obejto na memória. A identidade de cada objeto pode ser consultada pelo comando .blue[id].
 ```python
@@ -594,16 +594,16 @@ template: inverse
   ### Coleções
 ]
 .right-column[
-Java possui algumas alternativas como a interface de .blue[Collections] para trabalhar com caontainer de dados.
+Java possui algumas alternativas como a interface de .blue[Collections] para trabalhar com container de dados.
 Além do bom e velho array.
 
-Python chama tipos que se comportam como coleções de dados em geral de .blue[iterables] (iteraveis). Objetos iteraveis tem comportamentos similar ao de um array.
+Python chama tipos que se comportam como coleções de dados em geral de .blue[iterables] (iteráveis). Objetos iteráveis tem comportamentos similar ao de um array.
 
-Os tipos .blue[tuple] (tuplas) e .blue[list] (listas) são os tipos mais comumente usados. Lista mutaveis e tuplas não.
+Os tipos .blue[tuple] (tuplas) e .blue[list] (listas) são os tipos mais comumente usados. Lista são mutáveis e tuplas não.
 
-Alem das listas e tuplas outros tipos que são iteravais são dicionarios (.blue[dict]), em outras linguagens dicts podem ser chamados de arrays associativos, conjuntos (.blue[set]) e strings!!
+Alem das listas e tuplas outros tipos que são iteráveis são dicionários (.blue[dict]). Em outras linguagens dicts podem ser chamados de arrays associativos, conjuntos (.blue[set]) e strings!!
 
-Cada tipo tem atributos e metodos característicos, além do comportamento padrão de iteraveis: iterar por ele, tamanho do objeto entre outros.
+Cada tipo tem atributos e métodos característicos, além do comportamento padrão de iteráveis: iterar por ele, tamanho do objeto, entre outros.
 
 ]
 ---
@@ -613,7 +613,7 @@ Cada tipo tem atributos e metodos característicos, além do comportamento padr�
   ### Tuplas
 ]
 .right-column[
-Tuplas - Container imutavel de objetos
+Tuplas - Container imutável de objetos
 ```python
 >>> valores = (1, 2, 3, 4)
 >>> languages = ('Java', 'Python')
@@ -631,7 +631,7 @@ Uma característica bem interessante na indexação, é que Python suporta index
 (4,5,6)
 ```
 
-Fatiar (slicing) também é um comportamento padrão, oque torna o processo fácil e barato.
+Fatiar (slicing) também é um comportamento padrão, o que torna o processo fácil e barato.
 ```python
 >>> mix[2:5]
 3, (4, 5, 6), 'Python'
@@ -644,7 +644,7 @@ Fatiar (slicing) também é um comportamento padrão, oque torna o processo fác
   ### Listas
 ]
 .right-column[
-Listas - Container mutavel de objetos
+Listas - Container mutável de objetos
 ```python
 >>> valores = [1, 2, 3, 4]
 >>> languages = ['Java', 'Python']
@@ -680,7 +680,7 @@ Fatiar (slicing) também é um comportamento padrão, oque torna o processo fác
   ### Dicionários
 ]
 .right-column[
-Diferente de sequencias, dicionarios são indexados por qualquer tipo imutável, enquanto listas e tuplas são indexados por números.
+Diferente de sequências, dicionários são indexados por qualquer tipo imutável, enquanto listas e tuplas são indexados por números.
 ```python
 >>> pessoa = {'nome': 'João', 'idade': 10}
 >>> pessoa['nome']
@@ -695,7 +695,7 @@ dict_keys(['idade', 'nome'])
 >>> pessoa.values()
 dict_values([10, 'João'])
 ```
-Uma forma muito comum é usar uma lista de dicionarios que representam entidades.
+Uma forma muito comum é usar uma lista de dicionários que representam entidades.
 ```python
 >>> pessoas = [{'nome': 'João', 'idade': 10}, {'nome': 'Maria', 'idade': 15}]
 >>> pessoas[0]['nome']
@@ -725,7 +725,7 @@ Podemos imaginar um namespace como uma estrutura de dicionário Python, onde as 
 ```python
 a_namespace = {'name_a':object_1, 'name_b':object_2, ...}
 ```
-Por exemplo, toda vez que nós chamamos uma for-loop ou definir uma função, ele irá criar o seu próprio namespace. Namespaces também têm diferentes níveis de hierarquia.
+Por exemplo, toda vez que nós definirmos uma função, ela irá criar o seu próprio namespace. Namespaces também têm diferentes níveis de hierarquia.
 ]
 ---
 .left-column[
@@ -744,7 +744,7 @@ Objetos do namespace local só estão disponoveis dentro do escopo onde foram de
 Para entender a hierarquia de namespaces siga a estrutura do LEGB
 
 **Local** -> **Enclosed** -> **Global** -> **Built-in**
-- **Local** refere-se a objetos dentro de classes, metodos ou funções.
+- **Local** refere-se a objetos dentro de classes, métodos ou funções.
 - **Enclosed** se uma função é acondicionada dentro de outra função.
 - **Global** objetos que estão disponíveis para todos os escopos.
 - **Built-in** nomes especiais que o Python reserva para uso próprio.
@@ -815,7 +815,7 @@ template: inverse
   ## Funções
 ]
 .right-column[
-Em Java o metodo mais comum de criar metodos assemelha-se ao exemplo a seguir.
+Em Java o método mais comum de criar métodos assemelha-se ao exemplo a seguir.
 ```java
 public static int soma(int a, int b) {
     return a + b;
@@ -842,10 +842,10 @@ def soma(a: int, b: int) -> int:
   ### Argumentos
 ]
 .right-column[
-Existem 3 modos de passar argumentos para funçoes.
+Existem 3 modos de passar argumentos para funções.
 
 - Fixos
-- Arbitrarios [listas ou dicionários]
+- Arbitrários [listas ou dicionários]
 - Nomeados
 
 **Fixos**
@@ -874,7 +874,7 @@ def soma(a, b=1):
   ### Arbitrarios
 ]
 .right-column[
-Para definir argumentos arbitrarios (qunatidades indefinidas) para funções, basta adicionar um ***** antes do argumento ou ****** para argumentos nomeados.
+Para definir argumentos arbitrários (quantidade indefinida) para funções, basta adicionar um ***** antes do argumento ou ****** para argumentos nomeados.
 Argumentos simples são interpretados pela função como uma tupla.
 ```python
 def func(*args):
@@ -908,19 +908,19 @@ Lista de argumentos nomeados {'nome': 'joão', 'idade': 3}
   ### Atributos e Metodos
 ]
 .right-column[
-Funções têm atributos e metodos comuns a todas as funções. Uma forma de investigar quais atributos e metodos os o objeto tem, é usando o comando .blue[dir]
+Funções têm atributos e métodos comuns a todas as funções. Uma forma de investigar quais atributos e métodos um objeto tem, é usando o comando .blue[dir]
 ```python
 def func():
     return True
 
 >>> dir(func)
-['__annotations__', '__call__', '__class__', '__closure__', 
-'__code__', '__defaults__', '__delattr__', '__dict__', 
-'__dir__', '__doc__', '__eq__', '__format__', '__ge__', 
-'__get__', '__getattribute__', '__globals__', '__gt__', 
-'__hash__', '__init__', '__kwdefaults__', '__le__', 
-'__lt__', '__module__', '__name__', '__ne__', '__new__', 
-'__qualname__', '__reduce__', '__reduce_ex__', '__repr__', 
+['__annotations__', '__call__', '__class__', '__closure__',
+'__code__', '__defaults__', '__delattr__', '__dict__',
+'__dir__', '__doc__', '__eq__', '__format__', '__ge__',
+'__get__', '__getattribute__', '__globals__', '__gt__',
+'__hash__', '__init__', '__kwdefaults__', '__le__',
+'__lt__', '__module__', '__name__', '__ne__', '__new__',
+'__qualname__', '__reduce__', '__reduce_ex__', '__repr__',
 '__setattr__', '__sizeof__', '__str__', '__subclasshook__']
 
 >>> print(func.__class__)
