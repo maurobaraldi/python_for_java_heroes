@@ -298,7 +298,7 @@ O .blue[self] no Python é o .blue[this] do Java!
 ---
 template: inverse
 
-# Fluxos de controle
+# Controles de fluxo
 ---
 .left-column[
   ## Python
@@ -465,7 +465,7 @@ template: inverse
   ### Expressões
 ]
 .right-column[
-As palavras .blue[and], .blue[or], .blue[not], .blue[&&], .blue[||] e .blue[!], funcionam exatamente igual em Java e C.
+As palavras .blue[and], .blue[or], .blue[not] fazem as vezes .blue[&&], .blue[||] e .blue[!], em Java e C.
 
 Entretanto em Python .blue[==], compara por valor. Java compara numeros por valor e objetos por referência.
 
@@ -721,7 +721,7 @@ A grosso modo, namespaces são apenas recipientes para nomes de mapeamento a obj
 
 O "escopo" em Python define o "nível de hierarquia", no qual buscamos namespaces para certos mapeamentos "nome-a-objeto".
 
-Podemos imaginar um namespace como uma estrutura de dicionário Python, onde as chaves de dicionário representam os nomes e o dicionário valoriza o objeto em si (e esta é também a forma como namespaces são actualmente implementados em Python)
+Podemos imaginar um namespace como uma estrutura de dicionário Python, onde as chaves de dicionário representam os nomes e o dicionário valoriza o objeto em si (e esta é também a forma como namespaces são de fato implementados em Python)
 
 ```python
 a_namespace = {'name_a':object_1, 'name_b':object_2, ...}
@@ -734,11 +734,11 @@ Por exemplo, toda vez que nós definirmos uma função, ela irá criar o seu pr�
   ### Namespace
 ]
 .right-column[
-Há basicamente 2 namespaces, .blue[global] e .blue[local]
+Há basicamente 2 namespaces, do .blue[modulo] e .blue[local]
 
 A grosso modo, namespaces são apenas recipientes para nomes de mapeamento a objetos.
 
-Objetos do namespace global estarão disponiveis para a aplicação de um modo geral.
+Objetos do namespace do modulo estarão disponiveis para o modulo.
 
 Objetos do namespace local só estão disponoveis dentro do escopo onde foram definidos.
 
@@ -932,6 +932,7 @@ def func():
 template: inverse
 
 # Classes
+### Aspectos de Orientação a Objeto
 ---
 .left-column[
   ## Classes
@@ -1007,23 +1008,78 @@ class BaseClass:
 class DerivedClass(BaseClass):
     def __init__(self, *args, **kwargs):
         super(DerivedClass, self).__init__()
-        self.name = kwargs.get("name", self.name)
-
+        if "name" in kwargs:
+            self.name = kwargs['name']
+        
 >>> base = BaseClass()
->>> print(base.attribute)
+>>> print(base.name)
 'Classe Base'
+
 >>> derivada = DerivedClass()
->>> print(derivada.attribute)
-'Classe Derivada'
+>>> print(derivada.name)
+'Classe Base'
+
+>>> descendente = DerivedClass(name='Aha!')
+>>> print(descendente.name)
+'Aha!'
 ```
+O .blue[super] do Python funciona de forma análoga ao do Java, mas você só precisa defini-lo uma vez, não precisando usa-lo para acessar os atributos da super classe.
+
+]
+---
+.left-column[
+  ## Classes
+  ## Herança Multipla
+]
+.right-column[
+Como toda classe é conceitualmente uma instancia de .blue[object], então, herdar atributos uma classe seria herdar da classe, além de .blue[object].
+
+Para evitar o problema mais comum em herança multipla, Python usa um algoritmo de linearização de busca que preserva a ordem de busca da esquerda para direita dos objetos.
+
+Esse mecanismo é chamado de Method Resolution Order ou .blue[MRO].
+```python
+>>> class A(): pass
+>>> A.__mro__
+(<class '__main__.A'>, <type 'object'>)
+
+>>> class B(A): pass
+>>> B.__mro__
+(<class '__main__.B'>, <class '__main__.A'>, <type 'object'>)
+
+>>> class C(A): pass
+>>> class D(B, C): pass
+>>> D.__mro__
+(<class '__main__.D'>, <class '__main__.B'>, 
+<class '__main__.C'>, <class '__main__.A'>, <class 'object'>)
+```
+]
+---
+.left-column[
+  ## Classes
+  ## Atributos
+  ### Privados
+]
+.right-column[
+Nomes de metodos e atributos, em classes, que comecem com underscore servem unicamente como indicação que o atributo ou método "comporta-se" como privado.
+
+Não existem atributos privados em Python propriamente dito. Por isso há uma convenção de usar **_** para atributos privados, **__** usado para evitar substituição em caso de um attributo da super classe ter o mesmo nome, e **__**__methodname__**__** são metodos "especiais" que o Python usa.
+
+São metodos que podem 
+
 ]
 ---
 References:
 Namespace and Scope:
 - http://sebastianraschka.com/Articles/2014_python_scope_and_namespaces.html
 - http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules
+
 Classes
 - https://docs.python.org/3/tutorial/classes.html
+
+MRO
+- http://stackoverflow.com/questions/2010692/what-does-mro-do-in-python
+- https://www.python.org/download/releases/2.3/mro/
+
 ---
 name: last-page
 template: inverse
