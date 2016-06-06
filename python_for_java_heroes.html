@@ -153,14 +153,12 @@ layout: false
 
 - Tipos
 - Escopo
-- Funções, Classes, Instâncias, Módulos
+- Funções, Classes, Instâncias
 - Concorrência
-- Unit Testing
-- Frameworks
+- Testes e Debugging
+- Web
 
 ###.blue[Terceira Parte - Melhores Práticas]
-
-###.blue[Quarta Parte - Kata]
 ]
 ---
 template: inverse
@@ -1060,12 +1058,304 @@ Esse mecanismo é chamado de Method Resolution Order ou .blue[MRO].
   ### Privados
 ]
 .right-column[
-Nomes de metodos e atributos, em classes, que comecem com underscore servem unicamente como indicação que o atributo ou método "comporta-se" como privado.
-
 Não existem atributos privados em Python propriamente dito. Por isso há uma convenção de usar **_** para atributos privados, **__** usado para evitar substituição em caso de um attributo da super classe ter o mesmo nome, e **__**__methodname__**__** são metodos "especiais" que o Python usa.
 
-São metodos que podem 
+Sempre haverá um operador ou um metodo builtin chamando um metodo especial.
 
+```python
+class Calculadora():
+
+    def __init__(self, numero):
+        self.numero = numero
+
+    def __add__(self, numero):
+        return self.numero - numero
+
+    def __sub__(self, numero):
+        return self.numero + numero
+
+>>> calc = Calculadora(20)
+>>> calc + 30
+-10
+>>> calc - 30
+50
+```
+]
+---
+template: inverse
+
+# Concorrência
+---
+.left-column[
+  ## Concorrência
+  ## Bibliotecas
+]
+.right-column[
+## <center>std lib</center>
+
+- Threads - .blue[threading]
+- Processos - .blue[multiprocessing]
+- Concorrência - .blue[concurrent.futures]
+- Programação Assincrona - .blue[asyncio]
+  - Coroutines - Multitasking não preenptivo
+- Socket Assincrono - .blue[asyncore]
+- Sinais - .blue[signal]
+
+## <center>3rd party libs</center>
+
+- [Eventlet](http://eventlet.net/) - Concurrencia em nível de rede
+- [Gevent](http://www.gevent.org/) - Corotinas em nível de rede
+- [Twisted](http://twistedmatrix.com/trac/) - Networking lib orientado a evento.
+
+Leitura recomendada: **Generators** e **Global Interpreter Lock** (GIL)
+]
+---
+template: inverse
+
+# Testes e Debuging
+---
+.left-column[
+  ## Testes e Debuging
+  ## Unit Test
+]
+.right-column[
+Python disponibilza mais de um método, bultin, de testar suas aplicações.
+
+.blue[Doctest] é a bibioteca que realiza testes a partir de Docstrings. A documentação da classe ou metodo, com exemplos pode ser aprovaitada como asset para testes a partir da doctest.
+
+```python
+def rq(n):
+    """
+    Calcula a raiz quadrada de de n:
+    
+    >>> rq(2)
+    4
+    
+    >>> rq(10)
+    100
+    """
+    return n * n
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+```
+Para testa basta executar
+```bash
+python raiz.py
+```
+]
+---
+.left-column[
+  ## Testes e Debuging
+  ## Docstest
+]
+.right-column[
+Para obter um relatório dos testes, adiciona a opção **-v** (verbose).
+
+```bash
+$ python raiz.py -v
+Trying:
+    rq(2)
+Expecting:
+    4
+ok
+Trying:
+    rq(10)
+Expecting:
+    100
+ok
+1 items had no tests:
+    __main__
+1 items passed all tests:
+   2 tests in __main__.rq
+2 tests in 2 items.
+2 passed and 0 failed.
+Test passed.
+```
+Entretanto, esse seria um test no nível do módulo. Para testar todos os módulos/classes do projeto, a biblioteca .blue[unittest] é a mais adequada.
+]
+---
+.left-column[
+  ## Testes e Debuging
+  ## Unittest
+]
+.right-column[
+A biblioteca unittest foin inspirada na JUnit e tem muitas características similares como, automação de testes, compartilhamento de contexto de setup e shutdown, agrupamento de testes por coleções e outros (.blue[XUnit architecture]).
+
+```python
+import unittest
+
+class TestStringMethods(unittest.TestCase):
+
+    def test_upper(self):
+        self.assertEqual('java'.upper(), 'JAVA')
+
+    def test_isupper(self):
+        self.assertTrue('JAVA'.isupper())
+        self.assertFalse('Java'.isupper())
+
+    def test_split(self):
+        s = 'Java e Python'
+        self.assertEqual(s.split(), ['Java', 'e', 'Python'])
+        # Separador do split não é uma string.
+        with self.assertRaises(TypeError):
+            s.split(2)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+]
+---
+.left-column[
+  ## Testes e Debuging
+  ## Mock
+]
+.right-column[
+A biblioteca de .blue[mock] é parte da stdlib! .blue[&#10084]
+
+Usando mock para interceptar a chamada do metodo de classe.
+
+**module.py**
+```python
+class HelloClass:
+    def hello_method():
+        return "Hello world"
+```
+
+**test_module.py**
+```python
+import unittest
+from unittest import mock
+
+
+class TestHelloClass(unittest.TestCase):
+
+    @mock.patch.object(HelloClass, 'hello_method')
+    def test_get_ip_should_succeed(self, mock_hello):
+        mock_hello.return_value="Quack"
+        hello = HelloClass()
+        self.assertEqual(hello.hello_method(), "Quack")
+
+if __name__ == '__main__':
+    unittest.main()
+```
+]
+---
+.left-column[
+  ## Testes e Debuging
+  ## Debug
+]
+.right-column[
+A biblioteca padrão de debuging em Pyhton chama-se .blue[pdb] (Python Debugger) 
+
+As principais funcionalidades dele são
+
+- Breakpoints (condicionais)
+- Navegação pelo código
+- Inspeção da stack
+- Listar a posição atual em relação a execução
+- Executar código Python no shell interativo
+
+]
+---
+template: inverse
+
+# Web
+---
+.left-column[
+  ## Web
+  ## Frameworks
+]
+.right-column[
+Diferente de .blue[PHP] que foi concebida para ser uma linguagem para web e .blue[Java] que possue uma estrutura criar web apps com sua stack padrão, Python não foi desenhado para se uma linguagem para web apps.
+
+Entretanto, com o tempo ela foi evoluindo e hoje conta com alguns frameworks que facilitam ainda mais esse ecosistema.
+
+**Full Stack**
+- Servidor HTTP base (geralmente para desenvolvimento) 
+- Mecanismo de banco de dados (ORM)
+- Template Engine
+- Request Dispacher
+- Autenticação
+- AJAX Toolkit
+
+**Non Full Stack** 
+
+Conhecidos como "application servers" onde você pode implementar os mecanismos "from scratch" ou usar algumas bibliotecas prontas.
+]
+---
+.left-column[
+  ## Web
+  ### Frameworks
+  ## Django
+]
+.right-column[
+O mote do .blue[Django] é "O framework para perfeicionista com prazo." 
+
+É o framework mais usado em pela sua agilidade no desenvolivmento e estabilidade. Foi o primeiro framework suportado pelo .blue[Google App Engine].
+
+A estrutura de um projeto em Django. 
+```
+project
+├── manage.py
+├── project
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+└── aplication
+    ├── admin.py
+    ├── apps.py
+    ├── __init__.py
+    ├── migrations
+    │   └── __init__.py
+    ├── models.py
+    ├── tests.py
+    └── views.py
+```
+]
+---
+.left-column[
+  ## Web
+  ### Frameworks
+  ## Django
+  ### Models
+
+]
+.right-column[
+Exemplo de um arquivo de models.
+```
+class Band(models.Model):
+    """Classe de bandas."""
+    name = models.CharField(max_length=200)
+    can_rock = models.BooleanField(default=True)
+
+
+class Member(models.Model):
+    """Classe de membros."""
+    name = models.CharField("Nome do membro", max_length=200)
+    instrument = models.CharField(choices=(
+            ('g', "Guitarra"),
+            ('b', "Baixo"),
+            ('d', "Bateria"),
+            ('v', "Vocal"),
+        ),
+        max_length=1
+    )
+    band = models.ForeignKey("Band")
+```
+Handler de formulários
+```python
+from django import forms
+
+class FormularioDeContato(forms.Form):
+    subject = forms.CharField(max_length=100)
+    message = forms.CharField()
+    sender = forms.EmailField()
+    cc_myself = forms.BooleanField(required=False)
+      
+```
 ]
 ---
 References:
