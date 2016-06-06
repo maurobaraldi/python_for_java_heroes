@@ -269,7 +269,7 @@ template: inverse
   ### Características
 ]
 .right-column[
-Python é compilada compilada para bytecode, e então executada pela VM, muito semelhante a Java.
+Python é compilada para bytecode, e então executada pela VM, muito semelhante a Java.
 
 O compilador Python padrão é chamado de .blue[CPython]. Existem algumas variações de compiladores como .blue[Jython] (Java), .blue[Iron Python] (.Net), .blue[Pypy] (Python).
 
@@ -1356,6 +1356,64 @@ class FormularioDeContato(forms.Form):
     cc_myself = forms.BooleanField(required=False)
       
 ```
+]
+---
+.left-column[
+  ## Web
+  ### Frameworks
+  ## Flask
+]
+.right-column[
+Flask é um micro framework que vem ganhando bastante mercado, pricipalmente entre desenvolvedores mais experientes.
+
+O fato de não ter funcionalidases com camada de abstração de dados e validação de formularios embutidas o fazem uma boa escolha para APIs.
+
+Uma aplicação mínima em Flask
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello World!"
+
+
+if __name__ == "__main__":
+    app.run()
+```
+]
+---
+.left-column[
+  ## Web
+  ### Frameworks
+  ## Tornado
+]
+.right-column[
+.blue[Tornado] é um framework wed e biblioteca de rede assincrona. 
+
+Usando I/O não blocante para conexões, Tronado escala milhares de conexões (10k conns) concorrentes. Muito usado para aplicações que usam **websockets**
+WebSockets, and other applications that require a long-lived connection to each user.
+
+Exemplo de web app.
+
+```python
+import tornado.ioloop
+import tornado.web
+
+class MainHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.write("Hello, world")
+
+def make_app():
+    return tornado.web.Application([
+        (r"/", MainHandler),
+    ])
+
+if __name__ == "__main__":
+    app = make_app()
+    app.listen(8888)
+    tornado.ioloop.IOLoop.current().start()```
 ]
 ---
 References:
