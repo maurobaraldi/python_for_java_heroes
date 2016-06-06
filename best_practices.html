@@ -231,7 +231,6 @@ return ((x, y, z) for x in xrange(5) for y in xrange(5)
 ```
 ]
 ---
-layout: false
 .left-column[
   ## Google
   ## Guia de Estilo
@@ -259,20 +258,208 @@ for line in afile.readlines():
 - Usa menos memória do que uma função que cria uma lista inteira de valores de uma só vez.
 ]
 ---
-layout: false
 .left-column[
   ## Google
   ## Guia de Estilo
   ## Regras da Linguagem
 ]
 .right-column[
+###.blue[Mas o que são Generators?]
+- Funções geradoras permitem declarar uma função que se comporta como um iterator, ou seja, podem ser usadas em um loop.
 
+```python
+def simple_generator_function():
+    yield 1
+    yield 2
+    yield 3
+
+
+for value in simple_generator_function():
+    print(value)
+>>> 1
+>>> 2
+>>> 3
+
+our_generator = simple_generator_function()
+next(our_generator)
+>>> 1
+next(our_generator)
+>>> 2
+next(our_generator)
+>>> 3
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Funções Lambda]
+- Okay quando restritas a uma linha.
+- Se a função tiver de mais de 60 caracteres, é provavelmente melhor declarar a função normalmente.
+
+###.blue[Expressões Condicionais]
+- Okay quando restritas a uma linha.
+
+```python
+x = 1 if cond else 2
+```
+
+###.blue[Valor Padrão de Argumentos]
+- Okay na maioria dos casos.
+- Não use objetos mutáveis como valor padrão na definição do método ou função.
+
+```python
+# NÃO
+def foo(a, b=[])
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Propriedades]
+- Use para acessar ou configurar dados onde normalmente você usaria métodos "lightweight" `set` ou `get`.
+- Propriedades que são `readonly` devem ser criadas com o decorator `@property`.
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Exemplo]
+
+```python
+import math
+
+ class Square(object):
+     def __init__(self, side):
+         self.side = side
+
+     def __get_area(self):
+         """Calculates the 'area' property."""
+         return self.side ** 2
+
+     def ___get_area(self):
+         """Indirect accessor for 'area' property."""
+         return self.__get_area()
+
+     def __set_area(self, area):
+         """Sets the 'area' property."""
+         self.side = math.sqrt(area)
+
+     def ___set_area(self, area):
+         """Indirect setter for 'area' property."""
+         self.__set_area(area)
+
+     area = property(___get_area, ___set_area,
+                     doc="""Gets or sets the area of the square.""")
+
+     @property
+     def perimeter(self):
+         return self.side * 4
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Verdadeiro/Falso]
+- Use o falso "implícito" se possível.
+
+```python
+# SIM
+if not users:
+    print('no users')
+
+if foo == 0:
+    self.handle_zero()
+
+if i % 10 == 0:
+    self.handle_multiple_of_ten()
+
+# NÃO
+if len(users) == 0:
+    print('no users')
+
+if foo is not None and not foo:
+    self.handle_zero()
+
+if not i % 10:
+    self.handle_multiple_of_ten()
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Lexical Scoping]
+- Okay, mas use com cuidado.
+
+```python
+# SIM
+def get_adder(summand1):
+    """Returns a function that adds numbers to a given number."""
+    def adder(summand2):
+        return summand1 + summand2
+
+    return adder
+
+# NÃO
+i = 4
+def foo(x):
+    def bar():
+        print i,
+    # ...
+    # A bunch of code here
+    # ...
+    for i in x:  # Ah, i *is* local to Foo, so this is what Bar sees
+        print i,
+    bar()
+
+foo([1, 2, 3])
+>>> 1 2 3 3
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Decoradores de Função/Método]
+- Use criteriosamente, quando houver vantagem.
+
+###.blue[Threading]
+- Não confie na atomicidade de tipos built-in.
+- Use os módulos e pacotes específicos para isso.
+
+###.blue[Power Features]
+- Python é uma linguagem extremamente flexível e possui muitos recursos extravagantes, tais como metaclasses, herança dinâmica, acesso a bytecode, etc.
+- Evite tais recursos.
 ]
 ---
 References:
 ##Referências
 - https://gist.github.com/sloria/7001839
 - https://google.github.io/styleguide/pyguide.html
+- https://wiki.python.org/moin/Generators
+- https://jeffknupp.com/blog/2013/04/07/improve-your-python-yield-and-generators-explained/
+- https://www.toptal.com/python/top-10-mistakes-that-python-programmers-make
     </textarea>
     <script src="remark-latest.min.js"></script>
     <script>
