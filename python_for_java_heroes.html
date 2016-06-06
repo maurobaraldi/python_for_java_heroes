@@ -133,7 +133,7 @@ class: center, middle, inverse
 #Python para Java Heroes
 Todos super-heróis são bem vindos :-)
 
-### Por Mauro Baraldi (@mbaraldi) e Henrique Gonzalez (@henriquesg)
+### Por Mauro Baraldi (@mbaraldi) e Henrique Gonzales (@henriquesg)
 
 .footnote[Slides created with [RemarkJS](https://github.com/gnab/remark)]
 ---
@@ -159,6 +159,9 @@ layout: false
 - Web
 
 ###.blue[Terceira Parte - Melhores Práticas]
+
+- Valores e Orientações Gerais
+- Google Python Style Guide
 ]
 ---
 template: inverse
@@ -1415,7 +1418,331 @@ if __name__ == "__main__":
     tornado.ioloop.IOLoop.current().start()```
 ]
 ---
+template: inverse
+
+#Melhores Práticas em Python
+Uma lista do que fazer e não fazer.
+---
+layout: false
+.left-column[
+  ## Melhores Práticas
+  ## Geral
+]
+.right-column[
+###.blue[Valores]
+
+- _"Construa para os outros ferramentas que gostaria que fossem construídas para você."_ - __Kenneth Reitz__
+- _"Simplicidade é sempre melhor que funcionalidade."_ - __Pieter Hintjens__
+- _"Adeque para 90% dos casos de uso. Ignore quem fala 'nay'"_ - __Kenneth Reitz__
+
+###.blue[Orientações Gerais de Desenvolvimento]
+
+- _"Qualquer um pode consertar qualquer coisa."_ - __Khan Academy Development Docs__
+- Conserte cada 'janela quebrada' (design ruim, decisão errada) _assim que descoberta_.
+- Teste impiedosamente. Escreva documentação para novas funcionalidades.
+- Mais importante que Test-Driven Development - _Human-Driven Development_
+- Essas orientaçãos podem (provavelmente) irão mudar.
+]
+---
+.left-column[
+## Google
+## Guia de Estilo
+## Regras da Linguagem
+]
+.right-column[
+###.blue[Lint]
+- Use `pylint` em seu código. (Ex: Para o Atom, __linter-pylama__)
+
+###.blue[Imports]
+- Use `import x` para importar pacotes e módulos
+- Use `from x import y` onde `x` é o pacote e y o módulo.
+- Use `from x import y as z` se dois módulos são chamados `y` ou se `y` é inconvenientemente longo.
+
+Por exemplo, o módulo `sound.effects.echo` pode ser importado da seguinte maneira:
+```python
+from sound.effects import echo
+...
+echo.EchoFilter(input, output)
+```
+
+Não use imports relativos. Mesmo se o módulo está dentro do mesmo pacote, use o nome completo do pacote. Isso ajuda a não importar um pacote duas vezes sem querer.
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Exceptions]
+- Exceções são permitidas, mas devem ser usadas com cuidado.
+- Quando capturando uma exceção, use `as` no lugar de vírgula. Exemplo:
+
+```python
+try:
+    raise Error
+except Error as error:
+    pass
+```
+
+###.blue[Variáveis Globais]
+- Obviamente, evite.
+- Constantes a nível de módulo devem ser nomeadas usando _all caps_ e _ underscores_.
+
+```python
+PI_NUMBER = 3.14159
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Classes e Funções Aninhadas/Locais/Internas]
+- São permitidas.
+- Uma classe pode ser definida dentro de um método, função ou classe. Uma função pode ser definida dentro de um método ou função.
+
+###.blue[List Comprehensions]
+- Okay em casos simples.
+- Expressão geradoras podem ser muito eficientes, uma vez que evitam a criação de uma lista.
+- List comprehensions ou expressões geradoras complicadas podem ser difíceis de ler:
+
+```python
+# NÃO FAZER
+result = [(x, y) for x in range(10)
+          for y in range(5) if x * y > 10]
+
+return ((x, y, z) for x in xrange(5) for y in xrange(5)
+        if x != y for z in xrange(5) if y != z)
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Default Iterators e Operators]
+- Use os iterators e operators padrões para os tipos que dão suporte, como lists, dicts e files:
+
+```python
+#SIM
+for key in adict:
+if key not in adict:
+if obj in alist:
+for line in afile:
+
+#NÃO
+for key in adict.keys():
+if not adict.has_key(key):
+for line in afile.readlines():
+```
+
+###.blue[Generators]
+- Use conforme necessário.
+- Usa menos memória do que uma função que cria uma lista inteira de valores de uma só vez.
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Mas o que são Generators?]
+- Funções geradoras permitem declarar uma função que se comporta como um iterator, ou seja, podem ser usadas em um loop.
+
+```python
+def simple_generator_function():
+    yield 1
+    yield 2
+    yield 3
+
+
+for value in simple_generator_function():
+    print(value)
+>>> 1
+>>> 2
+>>> 3
+
+our_generator = simple_generator_function()
+next(our_generator)
+>>> 1
+next(our_generator)
+>>> 2
+next(our_generator)
+>>> 3
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Funções Lambda]
+- Okay quando restritas a uma linha.
+- Se a função tiver de mais de 60 caracteres, é provavelmente melhor declarar a função normalmente.
+
+###.blue[Expressões Condicionais]
+- Okay quando restritas a uma linha.
+
+```python
+x = 1 if cond else 2
+```
+
+###.blue[Valor Padrão de Argumentos]
+- Okay na maioria dos casos.
+- Não use objetos mutáveis como valor padrão na definição do método ou função.
+
+```python
+# NÃO
+def foo(a, b=[])
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Propriedades]
+- Use para acessar ou configurar dados onde normalmente você usaria métodos "lightweight" `set` ou `get`.
+- Propriedades que são `readonly` devem ser criadas com o decorator `@property`.
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Exemplo]
+
+```python
+import math
+
+ class Square(object):
+     def __init__(self, side):
+         self.side = side
+
+     def __get_area(self):
+         """Calculates the 'area' property."""
+         return self.side ** 2
+
+     def ___get_area(self):
+         """Indirect accessor for 'area' property."""
+         return self.__get_area()
+
+     def __set_area(self, area):
+         """Sets the 'area' property."""
+         self.side = math.sqrt(area)
+
+     def ___set_area(self, area):
+         """Indirect setter for 'area' property."""
+         self.__set_area(area)
+
+     area = property(___get_area, ___set_area,
+                     doc="""Gets or sets the area of the square.""")
+
+     @property
+     def perimeter(self):
+         return self.side * 4
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Verdadeiro/Falso]
+- Use o falso "implícito" se possível.
+
+```python
+# SIM
+if not users:
+    print('no users')
+
+if foo == 0:
+    self.handle_zero()
+
+if i % 10 == 0:
+    self.handle_multiple_of_ten()
+
+# NÃO
+if len(users) == 0:
+    print('no users')
+
+if foo is not None and not foo:
+    self.handle_zero()
+
+if not i % 10:
+    self.handle_multiple_of_ten()
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Lexical Scoping]
+- Okay, mas use com cuidado.
+
+```python
+# SIM
+def get_adder(summand1):
+    """Returns a function that adds numbers to a given number."""
+    def adder(summand2):
+        return summand1 + summand2
+
+    return adder
+
+# NÃO
+i = 4
+def foo(x):
+    def bar():
+        print i,
+    # ...
+    # A bunch of code here
+    # ...
+    for i in x:  # Ah, i *is* local to Foo, so this is what Bar sees
+        print i,
+    bar()
+
+foo([1, 2, 3])
+>>> 1 2 3 3
+```
+]
+---
+.left-column[
+  ## Google
+  ## Guia de Estilo
+  ## Regras da Linguagem
+]
+.right-column[
+###.blue[Decoradores de Função/Método]
+- Use criteriosamente, quando houver vantagem.
+
+###.blue[Threading]
+- Não confie na atomicidade de tipos built-in.
+- Use os módulos e pacotes específicos para isso.
+
+###.blue[Power Features]
+- Python é uma linguagem extremamente flexível e possui muitos recursos extravagantes, tais como metaclasses, herança dinâmica, acesso a bytecode, etc.
+- Evite tais recursos.
+]
+---
 References:
+##Referências
 Namespace and Scope:
 - http://sebastianraschka.com/Articles/2014_python_scope_and_namespaces.html
 - http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules
@@ -1427,6 +1754,12 @@ MRO
 - http://stackoverflow.com/questions/2010692/what-does-mro-do-in-python
 - https://www.python.org/download/releases/2.3/mro/
 
+Best Practices
+- https://gist.github.com/sloria/7001839
+- https://google.github.io/styleguide/pyguide.html
+- https://wiki.python.org/moin/Generators
+- https://jeffknupp.com/blog/2013/04/07/improve-your-python-yield-and-generators-explained/
+- https://www.toptal.com/python/top-10-mistakes-that-python-programmers-make
 ---
 name: last-page
 template: inverse
